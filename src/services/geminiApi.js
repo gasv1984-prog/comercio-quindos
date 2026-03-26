@@ -42,7 +42,7 @@ export const processImage = (file) => {
 };
 
 export const enhancePublication = async (draft) => {
-  const textUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const textUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
   const textPayload = {
     contents: [{ parts: [{ text: `Título: ${draft.title}. Desc: ${draft.desc}. Cat: ${draft.cat}.` }] }],
     systemInstruction: { parts: [{ text: "Eres un experto en e-commerce escolar. Mejora el título (<50 chars) y la descripción para que sea persuasiva. Devuelve un JSON con 'title' y 'description'." }] },
