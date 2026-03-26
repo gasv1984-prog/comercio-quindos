@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDmEA-pb_wNzwuVnsdQfG7UfrmyJj_tog0";
 
 export const fetchWithRetry = async (url, options, retries = 3) => {
   const delays = [1000, 2000, 4000];
