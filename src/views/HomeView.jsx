@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ShoppingBag } from 'lucide-react';
 import { db } from '../firebase/config';
-import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import ProductCard from '../components/shared/ProductCard';
 
@@ -11,9 +11,11 @@ export default function HomeView({ setCurrentView }) {
 
   useEffect(() => {
     if (!db) return;
-    const q = query(collection(db, "products"), where("status", "==", "approved"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "products"), where("status", "==", "approved"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setItems(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      setItems(docs);
     });
     return unsubscribe;
   }, []);
